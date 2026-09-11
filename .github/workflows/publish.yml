@@ -18,4 +18,14 @@ jobs:
           node-version: 24
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - name: Validate plugin.json version matches package.json
+        run: |
+          node -e "
+            const pkg = require('./package.json');
+            const plugin = require('./plugin.json');
+            if (plugin.version !== pkg.version) {
+              console.error(\`plugin.json is out of sync with package.json: plugin.version=\${plugin.version} != package.version=\${pkg.version}\`);
+              process.exit(1);
+            }
+          "
       - run: npm publish

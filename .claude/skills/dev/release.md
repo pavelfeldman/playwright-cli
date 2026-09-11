@@ -4,7 +4,7 @@ A release is a `chore: mark v<next-patch>` commit whose PR body is the release n
 
 ## Steps
 
-1. **Bump the patch version** in `package.json` (e.g. `0.1.7` → `0.1.8`), then `npm install` to sync `package-lock.json`. This is the entry point — everything else (branch name, PR title, release notes filename) keys off the new version.
+1. **Bump the patch version** in `package.json` and `plugin.json` (e.g. `0.1.7` → `0.1.8`), then `npm install` to sync `package-lock.json`. This is the entry point — everything else (branch name, PR title, release notes filename) keys off the new version.
 
 2. **Find the baseline.** The previous release is the last `chore: mark v...` commit on `main`. Read the Playwright version pinned at that commit — that's the baseline for the diff.
    ```bash
@@ -59,7 +59,7 @@ A release is a `chore: mark v<next-patch>` commit whose PR body is the release n
 8. **Commit, push, open PR.** The PR body is the contents of the release notes file (no `#` header, no filename).
    ```bash
    git checkout -b mark-v<version>
-   git add package.json package-lock.json
+   git add package.json package-lock.json plugin.json
    git commit -m "chore: mark v<version>"
    git push -u origin mark-v<version>
    gh pr create --repo microsoft/playwright-cli \
